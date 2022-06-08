@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "./interface/IERC721.sol";
 
-contract debt{
+contract Debt{
 
     uint256 private NFTDebtCounter = 0;
     uint256 private NFTBidCounter = 0;

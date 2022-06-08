@@ -23,8 +23,12 @@ contract DebtNFT is ERC721URIStorage {
         _safeMint(msg.sender, newTokenId);
         _setTokenURI(newTokenId, tokenURI);
         debtNFT[newTokenId] = _debtNFTIdex;
+        tokenCounter+=1;
         return newTokenId;
     }
 
+    function burn(uint256 tokenId) external virtual  {
+        _burn(tokenId);
+    }
     
 }
