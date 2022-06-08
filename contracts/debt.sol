@@ -20,7 +20,7 @@ contract debt{
         address NFTCollectionAddress;
         uint256 tokenId;
         uint256 DebtAmount;
-        uint256 interestPercent;
+        uint256 interest;
         uint256 returnTime;
         uint256 numberOfBids;
         DebtStatus status;
@@ -160,6 +160,18 @@ contract debt{
         NFTDebtList[_NFTDebtId].status = DebtStatus.REMOVED;
         IERC721(NFTDebtList[_NFTDebtId].NFTAddress).transferFrom(address(this),NFTDebtList[_NFTDebtId].owner,NFTDebtList[_NFTDebtId].tokenId);
     }
+
+    function acceptBid(uint256 _bidId) external {
+        require(NFTBidList[_bidId].status == BidStatus.ACTIVE,"BID IS NOT ACTIVE");
+        require(NFTBidList[_bidId].owner == msg.sender,"NOT AN OWNER");
+        NFTBidList[_bidId].status = BidStatus.ACCEPTED;
+        NFTDebtList[NFTBidList[_bidId].NFTDebtId].status = DebtStatus.DEBT;
+        NFTDebtList[NFTBidList[_bidId].NFTDebtId].DebtAmount = NFTBidList[_bidId].debtAmount;
+        NFTDebtList[NFTBidList[_bidId].NFTDebtId].interest = NFTBidList[_bidId].interest;
+        payable(NFTBidList[_bidId].owner).transfer(NFTBidList[_bidId].debtAmount);
+    }
+
+    function payDebt
 
 
 }
