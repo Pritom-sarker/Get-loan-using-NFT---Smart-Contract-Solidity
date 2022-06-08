@@ -1,0 +1,140 @@
+// // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "./interface/IERC721.sol";
+
+contract debt{
+
+    uint256 private NFTDebtCounter = 0;
+    uint256 private NFTBidCounter = 0;
+    address public OWNER;
+    mapping(uint256=>NFTDebt) NFTDebtList;
+    mapping(uint256=>NFTBid) NFTBidList;
+    uint256 private marketcommission;
+
+    struct NFTDebt{
+        uint256 id;
+        address owner;
+        address lender;
+        address NFTAddress;
+        address NFTCollectionAddress;
+        uint256 tokenId;
+        uint256 DebtAmount;
+        uint256 interestPercent;
+        uint256 returnTime;
+        uint256 numberOfBids;
+        DebtStatus status;
+    }
+
+    enum DebtStatus{
+        ACTIVE,
+        REMOVED,
+        DEBT,
+        SUCCESS,
+        FAILURE
+    }
+
+    enum BidStatus{
+        ACTIVE,
+        REMOVED,
+        ACCEPTED
+    }
+
+    struct NFTBid{
+        uint256 id;
+        uint256 NFTDebtId;
+        address owner;
+        address bidder;
+        uint256 debtAmount;
+        uint256 interest;
+        BidStatus status;
+    }
+
+    // event
+
+    // modifier
+    modifier onlyOwner{
+        require(msg.sender==OWNER,"NOT AN OWNER");
+        _;
+    }
+
+
+    // function
+    constructor(uint256 _marketcommission){
+        OWNER = msg.sender;
+        marketcommission = _marketcommission;
+    }
+
+    function changeMarketCommission(uint256 _newCommission) external onlyOwner{
+        marketcommission = _newCommission;
+    }
+
+    function calculateCommission(uint256 _amount) internal returns(uint256) {
+        uint256 amount = (_amount * marketcommission)/100;
+        return amount;
+    }
+
+    function AddNewNFT(
+        address _nftAddress,
+        address _nftCollectionAddress,
+        uint256 _tokenId,
+        uint256 _interestAmount,
+        uint256 _interestPercent,
+        uint256 _returnTime,
+        uint256 _numberOfBids) public payable{
+
+        require(msg.sender == IERC721(_nftCollectionAddress).ownerOf(_tokenId),"Invalid owner");
+        require(msg.value == calculateCommission(_interestAmount),"PERFECT Commission NOT SENT");
+
+        // IERC721(_nftCollectionAddress).approve(address(this),)
+        NFTDebt memory newNFTDebt =  NFTDebt(
+            NFTDebtCounter,
+            msg.sender,
+            address(this),
+            _nftAddress,
+            _nftCollectionAddress,
+            _tokenId,
+            _interestAmount,
+            _interestPercent,
+            _returnTime,
+            _numberOfBids,
+            DebtStatus.ACTIVE
+        );
+        NFTDebtList[NFTDebtCounter] = newNFTDebt;
+        NFTDebtCounter+=1;
+    }
+
+
+    function numberOfBidsForThisNFT(uint256 _NFTDebtId) public returns(uint256){
+        uint256 thisCounter = 0;
+        for(uint256 i=0;i<NFTBidCounter;i++){
+            if(NFTBidList[i].NFTDebtId == _NFTDebtId){
+                thisCounter+=1;
+            }
+        }
+        return thisCounter;
+    }
+
+    function newBid(
+        uint256 _NFTDebtId,
+        uint256 _interest
+    ) external payable {
+        require(NFTDebtList[_NFTDebtId].status == DebtStatus.ACTIVE,"BID IS NOT ACTIVE");
+        require(NFTDebtList[_NFTDebtId].numberOfBids >= numberOfBidsForThisNFT(_NFTDebtId) ,"Max number of accepted bid reached");
+
+        NFTBid memory newNFTbid = NFTBid(
+            NFTDebtCounter,
+            _NFTDebtId,
+            NFTDebtList[_NFTDebtId].owner,
+            msg.sender,
+            msg.value,
+            _interest,
+            BidStatus.ACTIVE
+        );
+        NFTBidList[NFTDebtCounter] = newNFTbid;
+        NFTDebtCounter+=1;
+
+    }
+
+
+}
