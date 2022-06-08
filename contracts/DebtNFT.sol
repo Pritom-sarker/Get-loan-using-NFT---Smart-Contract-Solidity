@@ -17,10 +17,11 @@ contract DebtNFT is ERC721URIStorage {
 
     /// @notice An aritst can mint their NFT using this function
     function createCollectible(
+        address _owner,
         uint256 _debtNFTIdex
     ) public returns (uint256) {
         uint256 newTokenId = tokenCounter;
-        _safeMint(msg.sender, newTokenId);
+        _safeMint(_owner, newTokenId);
         _setTokenURI(newTokenId, tokenURI);
         debtNFT[newTokenId] = _debtNFTIdex;
         tokenCounter+=1;
