@@ -179,7 +179,7 @@ contract debt{
 
     function payDebt(uint256 _NFTDebtId) payable public {
         require(NFTDebtList[_NFTDebtId].status == DebtStatus.DEBT,"NFT is not in debt");
-        require(NFTDebtList[_NFTDebtId].owner == msg.sender,"NFT is not in debt");
+        require(NFTDebtList[_NFTDebtId].owner == msg.sender,"Not valid owner");
         require(NFTDebtList[_NFTDebtId].returnTime > block.timestamp,"Debt is not due");
         require(calculateTotalDebt(NFTDebtList[_NFTDebtId].debtAmount,NFTDebtList[_NFTDebtId].interest) == msg.value,"NFT is not in debt");
         payable(NFTDebtList[_NFTDebtId].lender).transfer(msg.value);
@@ -187,5 +187,12 @@ contract debt{
         IERC721(NFTDebtList[_NFTDebtId].NFTAddress).transferFrom(address(this),NFTDebtList[_NFTDebtId].owner,NFTDebtList[_NFTDebtId].tokenId);
     }
 
+    function redeemNFT(uint256 _NFTDebtId) external {
+        require(NFTDebtList[_NFTDebtId].status == DebtStatus.debt,"NFT is not in debt");
+        require(NFTDebtList[_NFTDebtId].lender == msg.sender,"Not a valid lender");
+        require(NFTDebtList[_NFTDebtId].returnTime < block.timestamp,"Debt is due");
+        IERC721(NFTDebtList[_NFTDebtId].NFTAddress).transferFrom(address(this),NFTDebtList[_NFTDebtId].lender,NFTDebtList[_NFTDebtId].tokenId);
+        NFTDebtList[_NFTDebtId].status = DebtStatus.FAILURE;
+    }
 
 }
