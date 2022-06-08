@@ -133,7 +133,32 @@ contract debt{
         );
         NFTBidList[NFTDebtCounter] = newNFTbid;
         NFTDebtCounter+=1;
+    }
 
+    function removeBid(uint256 _bidId) external {
+        require(NFTBidList[_bidId].status == BidStatus.ACTIVE,"BID IS NOT ACTIVE");
+        require(NFTBidList[_bidId].bidder == msg.sender,"NOT AN OWNER");
+        NFTBidList[_bidId].status == BidStatus.REMOVED;
+        payable(msg.sender).transfer(NFTBidList[_bidId].debtAmount);
+    }
+
+
+    function sendAllBidAmountBack(uint256 _NFTDebtId) private {
+        for(uint256 i=0; i<NFTBidCounter;i++){
+            if(NFTBidList[i].NFTDebtId == _NFTDebtId){
+                payable(NFTBidList[i].bidder).transfer(NFTBidList[i].debtAmount);
+            }
+
+        }
+    }
+
+
+    function removeNFT(uint256 _NFTDebtId) external {
+        require(NFTDebtList[_NFTDebtId].status == DebtStatus.ACTIVE,"NFT is not active");
+        require(NFTDebtList[_NFTDebtId].owner == msg.sender,"Not the owner");
+        sendAllBidAmountBack(_NFTDebtId);
+        NFTDebtList[_NFTDebtId].status = DebtStatus.REMOVED;
+        IERC721(NFTDebtList[_NFTDebtId].NFTAddress).transferFrom(address(this),NFTDebtList[_NFTDebtId].owner,NFTDebtList[_NFTDebtId].tokenId);
     }
 
 
