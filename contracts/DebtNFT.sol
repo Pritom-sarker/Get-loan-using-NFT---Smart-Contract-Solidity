@@ -28,6 +28,7 @@ contract DebtNFT is ERC721URIStorage {
     }
 
     function burn(uint256 tokenId) external virtual  {
+        require(this.ownerOf(tokenId) == msg.sender,"NOT VALID OWNER");
         _burn(tokenId);
     }
     
