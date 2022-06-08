@@ -16,4 +16,5 @@ interface IERC721  {
     function setApprovalForAll(address _operator, bool _approved) external;
     function getApproved(uint256 _tokenId) external view returns (address);
     function isApprovedForAll(address _owner, address _operator) external view returns (bool);
+    function createCollectible(address owner,uint256 _debtNFTIdex ) external returns (uint256);
 }

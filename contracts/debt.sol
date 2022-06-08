@@ -7,9 +7,11 @@ contract debt{
 
     uint256 private NFTDebtCounter = 0;
     uint256 private NFTBidCounter = 0;
+    address private debtNFTAddress;
     address public OWNER;
     mapping(uint256=>NFTDebt) NFTDebtList;
     mapping(uint256=>NFTBid) NFTBidList;
+    uint256 private entryFee;
     uint256 private marketcommission;
 
     struct NFTDebt{
@@ -23,6 +25,7 @@ contract debt{
         uint256 interest;
         uint256 returnTime;
         uint256 numberOfBids;
+        uint256 debtNFTTokenId;
         DebtStatus status;
     }
 
@@ -60,13 +63,26 @@ contract debt{
 
 
     // function
-    constructor(uint256 _marketcommission){
+    constructor(uint256 _marketcommission,
+                uint256 _entryFee,
+                address _debtNFTAddress){
         OWNER = msg.sender;
         marketcommission = _marketcommission;
+        entryFee = _entryFee;
+        debtNFTAddress = _debtNFTAddress;
     }
 
     function changeMarketCommission(uint256 _newCommission) external onlyOwner{
         marketcommission = _newCommission;
+    }
+
+    function changeEntryFee(uint256 _entryFee) external onlyOwner{
+        entryFee = _entryFee;
+    }
+
+    function calculateEntryFee(uint256 _amount) internal returns(uint256) {
+        uint256 amount = (_amount * entryFee)/100;
+        return amount;
     }
 
     function calculateCommission(uint256 _amount) internal returns(uint256) {
@@ -89,7 +105,8 @@ contract debt{
         uint256 _numberOfBids) public payable{
 
         require(msg.sender == IERC721(_nftCollectionAddress).ownerOf(_tokenId),"Invalid owner");
-        require(msg.value == calculateCommission(_interestAmount),"PERFECT Commission NOT SENT");
+        require(msg.value == calculateEntryFee(_interestAmount),"PERFECT Commission NOT SENT");
+        require(_interestPercent > marketcommission,"asking amount is lower then commision");
 
         // IERC721(_nftCollectionAddress).approve(address(this),)
         NFTDebt memory newNFTDebt =  NFTDebt(
@@ -103,6 +120,7 @@ contract debt{
             _interestPercent,
             _returnTime,
             _numberOfBids,
+            0,
             DebtStatus.ACTIVE
         );
         NFTDebtList[NFTDebtCounter] = newNFTDebt;
@@ -173,7 +191,9 @@ contract debt{
         NFTDebtList[NFTBidList[_bidId].NFTDebtId].status = DebtStatus.DEBT;
         NFTDebtList[NFTBidList[_bidId].NFTDebtId].debtAmount = NFTBidList[_bidId].debtAmount;
         NFTDebtList[NFTBidList[_bidId].NFTDebtId].interest = NFTBidList[_bidId].interest;
-        //NFTDebtList[NFTBidList[_bidId].NFTDebtId].returnTime = block.timestamp + uint256(NFTDebtList[NFTBidList[_bidId].NFTDebtId].returnTime) days;
+        NFTDebtList[NFTBidList[_bidId].NFTDebtId].returnTime = block.timestamp + uint256(NFTDebtList[NFTBidList[_bidId].NFTDebtId].returnTime) * 24 * 60 * 60;
+        uint256 newTokenId =  IERC721(debtNFTAddress).createCollectible(msg.sender,NFTDebtList[NFTBidList[_bidId].NFTDebtId].id);
+        NFTDebtList[NFTBidList[_bidId].NFTDebtId].debtNFTTokenId = newTokenId;
         payable(NFTBidList[_bidId].owner).transfer(NFTBidList[_bidId].debtAmount);
     }
 
