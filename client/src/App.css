@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;900&display=swap");
+
+:root {
+  --btnBg: linear-gradient(
+    101.12deg,
+    #eb1484 27.35%,
+    #c91cc3 99.99%,
+    #c81cc5 100%,
+    #c81cc5 100%
+  );
+  --primaryColor: #da18a3;
+  --fontColor: #2d2e36;
+  --fontColor2: #888888;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+.my-btn {
+  padding: 7px 20px;
+  border-radius: 10px;
+  background: var(--btnBg);
+  font-weight: 500;
+  border: none;
+  color: white;
+  transition: 0.5s;
+  font-size: 15px;
+  border: 1px solid var(--primaryColor);
+}
+.my-btn:hover {
+  background: white;
+  color: var(--primaryColor);
+  transition: 0.5s;
+}
+.active {
+  color: var(--fontColor) !important;
+}

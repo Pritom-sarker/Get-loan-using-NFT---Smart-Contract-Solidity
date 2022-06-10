@@ -1,0 +1,51 @@
+.productMain {
+  padding-top: 130px;
+  display: flex;
+  gap: 30px;
+}
+.productMain > img {
+  width: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.procuctDetails {
+  border-left: 1px solid rgba(128, 128, 128, 0.562);
+  padding: 30px;
+}
+
+.detailsTitle {
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+.detailsTitle > span {
+  border: 1px solid rgb(168, 168, 168);
+  border-radius: 30px;
+  padding: 5px 15px;
+  font-size: 14px;
+  margin-left: 10px;
+}
+.crator {
+  display: flex;
+  align-items: center;
+  padding: 3px 0 20px 0;
+}
+.crator > img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.details {
+  font-size: 1rem;
+}
+.peragraph {
+  font-size: 14px;
+}
+
+@media only screen and (max-width: 967px) {
+  .productMain {
+    flex-direction: column;
+  }
+}
