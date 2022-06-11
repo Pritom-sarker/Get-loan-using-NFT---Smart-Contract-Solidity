@@ -1,21 +1,21 @@
 import React from "react";
 import Logo from "../../assets/image/logo.svg";
-
 // internall imports
 import "./footer.css";
+
 
 export default function Footer() {
   return (
     <div className="footer">
       <div className="upperFooter">
         <div className="leftF">
-          <img src={Logo} alt="" class="footerLogo" />
+          <img src={Logo} alt="" className="footerLogo" />
           <br />
           <h6 className="footerTitle">Get the lastes Updates</h6>
           <div className="search footerSeach">
             <div className="input-group">
               <span className="input-group-text" id="basic-addon1">
-                <i class="fa-solid fa-paper-plane"></i>
+                <i className="fa-solid fa-paper-plane"></i>
               </span>
               <input
                 type="text"
@@ -51,23 +51,23 @@ export default function Footer() {
           <ul className="footerIcons">
             <li>
               <a href="#">
-                <i class="fa-brands fa-instagram"></i>{" "}
+                <i className="fa-brands fa-instagram"></i>{" "}
               </a>
             </li>
             <li>
               <a href="#">
-                <i class="fa-brands fa-twitter"></i>{" "}
+                <i className="fa-brands fa-twitter"></i>{" "}
               </a>
             </li>
             <li>
               <a href="#">
                 {" "}
-                <i class="fa-solid fa-paper-plane"></i>
+                <i className="fa-solid fa-paper-plane"></i>
               </a>
             </li>
             <li>
               <a href="#">
-                <i class="fa-brands fa-discord"></i>{" "}
+                <i className="fa-brands fa-discord"></i>{" "}
               </a>
             </li>
           </ul>

@@ -1,15 +1,12 @@
 import React from "react";
-import "./product.css";
-import Nav from "../../components/nav/Nav";
-import Footer from "../../components/footer/Footer";
 import image from "../../assets/image/abstract.png";
 import girl from "../../assets/image/girl.png";
+import Footer from "../../components/footer/Footer";
+import "./product.css";
 
 const Product = () => {
   return (
     <>
-      <Nav />
-
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-10">
@@ -19,7 +16,7 @@ const Product = () => {
                 <h2 className="detailsTitle">
                   Abstract Smoke Red Blue
                   <span>
-                    <i class="fa-solid fa-heart"></i> 38
+                    <i className="fa-solid fa-heart"></i> 38
                   </span>
                 </h2>
                 <p>

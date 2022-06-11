@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/image/logo.svg";
-// internal imports
 import "./nav.css";
 
 
 export default function Nav() {
+  const { authenticate, isAuthenticated, logout } = useMoralis();
   const [toggleButton, setToggleButton] = useState("hideNav");
 
   window.onscroll = function () {
@@ -52,18 +53,28 @@ export default function Nav() {
                   onClick={() => setToggleButton("hideNav")}
                 ></span>
                 <li>
-                  <a href="/user">Explore</a>
+                  <Link to="/user">User</Link>
                 </li>
                 <li>
-                  <a href="/nft">My Items</a>
+                  <Link to="/nft">NFT</Link>
                 </li>
                 <li>
-                  <a href="/team">Following</a>
+                  <Link to="/team">Team</Link>
+                </li>
+                <li>
+                  <Link to="/about">About</Link>
+                </li>
+                <li>
+                  <Link to="/roadmap">Roadmap</Link>
                 </li>
                 <li>
                   <button className="my-btn mybtnMobile">Create</button>
                   &nbsp;&nbsp;
-                  <button className="my-btn">Connecet</button>
+                  {isAuthenticated ? (
+                    <button className="my-btn" onClick={() => logout()}>Logout</button>
+                  ) : (
+                    <button className="my-btn" onClick={() => authenticate()}>Connect</button>
+                  )}
                 </li>
               </ul>
             </div>

@@ -12,7 +12,7 @@ const Card = ({ data }) => {
           <b>{balance}</b> ETH
         </h6>
         <p>
-          <i class="fa-solid fa-heart"></i>
+          <i className="fa-solid fa-heart"></i>
           &nbsp;
           <span>{reaction}</span>
         </p>

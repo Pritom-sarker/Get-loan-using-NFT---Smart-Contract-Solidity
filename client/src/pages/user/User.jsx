@@ -1,17 +1,17 @@
 import React from "react";
-import "./user.css";
+import { Link } from "react-router-dom";
 import girl from "../../assets/image/girl.png";
-import Nav from "../../components/nav/Nav";
-import { cardData } from "../home/data";
 import Card from "../../components/card/Card";
 import Footer from "../../components/footer/Footer";
-import { Link } from "react-router-dom";
+import { cardData } from "../home/data";
+import "./user.css";
+
+
 
 const User = () => {
   return (
     <>
-      <Nav />
-      <div className="userLanding">
+     <div className="userLanding">
         <div className="userSection">
           <img src={girl} className="userImaga" />
           <h3>Mia Ayana</h3>
@@ -35,10 +35,11 @@ const User = () => {
                 </div>
               </div>
               <select
-                class="form-select filtering"
+                className="form-select filtering"
                 aria-label="Default select example"
+                defaultValue="recent"
               >
-                <option selected>Recently used</option>
+                <option value="recent">Recently used</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>

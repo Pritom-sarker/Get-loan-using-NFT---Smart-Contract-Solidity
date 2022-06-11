@@ -1,18 +1,16 @@
 import React from "react";
-import Nav from "../../components/nav/Nav";
+import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import { settings } from "../../assets/settings";
-import "./home.css";
-import SliderC from "../../components/sCard/SliderC";
-import { sliderData, cardData } from "./data";
 import Card from "../../components/card/Card";
 import Footer from "../../components/footer/Footer";
-import { Link } from "react-router-dom";
+import SliderC from "../../components/sCard/SliderC";
+import { cardData, sliderData } from "./data";
+import "./home.css";
 
 const Home = () => {
   return (
     <>
-      <Nav />
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-10">
