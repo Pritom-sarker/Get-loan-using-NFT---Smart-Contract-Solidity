@@ -2,12 +2,53 @@ import React, { useState } from "react";
 import { useMoralis } from "react-moralis";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/image/logo.svg";
+import { getEllipsisTxt } from "../../helpers/formatters";
+import Address from "../Address/Address";
+import Blockie from "../Blockie";
+import "./modal.css";
 import "./nav.css";
 
+const styles = {
+  account: {
+    height: "42px",
+    padding: "0 15px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "fit-content",
+    borderRadius: "12px",
+    backgroundColor: "rgb(244, 244, 244)",
+    cursor: "pointer",
+  },
+  text: {
+    color: "#21BF96",
+    marginBottom: "0px"
+  },
+  connector: {
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    height: "auto",
+    justifyContent: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
+    padding: "20px 5px",
+    cursor: "pointer",
+  },
+  icon: {
+    alignSelf: "center",
+    fill: "rgb(40, 13, 95)",
+    flexShrink: "0",
+    marginBottom: "8px",
+    height: "30px",
+  },
+}
 
 export default function Nav() {
-  const { authenticate, isAuthenticated, logout } = useMoralis();
+  const { authenticate, isAuthenticated, account, logout } = useMoralis();
   const [toggleButton, setToggleButton] = useState("hideNav");
+  const [modal, setModal] = useState(false);
+ 
 
   window.onscroll = function () {
     const navi = document.querySelector(".navSection");
@@ -15,6 +56,7 @@ export default function Nav() {
     if (height >= 10) navi.classList.add("secondNav");
     else navi.classList.remove("secondNav");
   };
+
 
   return (
     <>
@@ -62,18 +104,56 @@ export default function Nav() {
                   <Link to="/team">Team</Link>
                 </li>
                 <li>
-                  <Link to="/about">About</Link>
-                </li>
-                <li>
                   <Link to="/roadmap">Roadmap</Link>
                 </li>
+                    {modal && (
+                      <div id="myModal" class="modal">
+                      <div class="modal-content">
+                        <span style={{ textAlign: "end" }} class="close" onClick={() => setModal(false)}>&times;</span>
+                        <Address
+                            avatar="left"
+                            size={6}
+                            copyable
+                            style={{ fontSize: "20px" }}
+                          />
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          onClick={async () => {
+                            await logout();
+                            setModal(false);
+                          }}
+                        >
+                          Disconnect Wallet
+                        </button>
+                      </div>
+                    </div>
+                    )}
                 <li>
                   <button className="my-btn mybtnMobile">Create</button>
-                  &nbsp;&nbsp;
-                  {isAuthenticated ? (
-                    <button className="my-btn" onClick={() => logout()}>Logout</button>
-                  ) : (
-                    <button className="my-btn" onClick={() => authenticate()}>Connect</button>
+                </li>
+                <li>
+                  {!isAuthenticated || !account ? (
+                    <button 
+                      className="my-btn" 
+                      onClick={async () => {
+                        try {
+                          await authenticate({ provider: "injected" });
+                          window.localStorage.setItem("connectorId", "injected");
+                        } catch (e) {
+                          console.error(e);
+                        }
+                      }}
+                    >
+                      Connect
+                    </button>
+                    ) : (
+                    <div style={styles.account} onClick={() => setModal(true)}>
+                      <p style={{ marginRight: "5px", ...styles.text }}>
+                        {getEllipsisTxt(account, 6)}
+                      </p>
+                      <Blockie currentWallet scale={3} />
+                    </div>
                   )}
                 </li>
               </ul>

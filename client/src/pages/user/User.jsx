@@ -1,4 +1,5 @@
 import React from "react";
+import { useMoralis, useMoralisWeb3Api } from "react-moralis";
 import { Link } from "react-router-dom";
 import girl from "../../assets/image/girl.png";
 import Card from "../../components/card/Card";
@@ -6,9 +7,10 @@ import Footer from "../../components/footer/Footer";
 import { cardData } from "../home/data";
 import "./user.css";
 
-
-
 const User = () => {
+  const { Moralis, user, account } = useMoralis();
+  const Web3Api = useMoralisWeb3Api();
+
   return (
     <>
      <div className="userLanding">
