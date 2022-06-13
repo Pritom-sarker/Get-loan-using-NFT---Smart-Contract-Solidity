@@ -107,9 +107,9 @@ export default function Nav() {
                   <Link to="/roadmap">Roadmap</Link>
                 </li>
                     {modal && (
-                      <div id="myModal" class="modal">
-                      <div class="modal-content">
-                        <span style={{ textAlign: "end" }} class="close" onClick={() => setModal(false)}>&times;</span>
+                      <div id="myModal" className="modal">
+                      <div className="modal-content">
+                        <span style={{ textAlign: "end" }} className="close" onClick={() => setModal(false)}>&times;</span>
                         <Address
                             avatar="left"
                             size={6}
