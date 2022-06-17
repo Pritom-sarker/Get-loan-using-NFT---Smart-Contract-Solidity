@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect } from "react";
-import 'react-loading-skeleton/dist/skeleton.css';
+import "react-loading-skeleton/dist/skeleton.css";
 import { useMoralis } from "react-moralis";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
@@ -12,7 +12,6 @@ import Product from "./pages/product/Product";
 import Roadmap from "./pages/roadmap/Roadmap";
 import Team from "./pages/team/Team";
 import User from "./pages/user/User";
-
 
 function App() {
   const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
