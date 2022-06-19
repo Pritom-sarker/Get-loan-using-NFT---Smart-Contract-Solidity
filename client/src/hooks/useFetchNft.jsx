@@ -18,6 +18,7 @@ const useFetchNft = () => {
             };
             const polygonNFTs = await Web3Api.account.getNFTs(options);
             setResults(polygonNFTs.result)
+            
             const items = await Promise.all(
                 results.map(async (nft) => {
                 if (nft.token_uri !== null) {

@@ -15,6 +15,8 @@ const ChangeEntryFee = () => {
   const handleSubmit = () => {
     changeEntryFee(entryFee);
   }
+
+  
   return (
     <>
       <button onClick={showModal} data-backdrop="false" className="my-btn">Change Entry Fee</button>
@@ -29,9 +31,14 @@ const ChangeEntryFee = () => {
           </div>
           {error && (
             <div class="alert alert-danger my-2" role="alert">
-              {error}
+              Sorry. Action Failed.
           </div>
           )}
+          {data ? (
+            <div class="alert alert-success my-2" role="alert">
+              Entry Fee Has Been Changed.
+            </div>
+          ):null}
         </Modal.Body>
       </Modal>
     </>

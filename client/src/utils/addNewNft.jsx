@@ -21,6 +21,7 @@ const AddNewNft = () => {
   const handleSubmit = () => {
     AddNewNFT(nftAddress,nftCollectionAddress,tokenId,interestAmount,interestPercent,returnTime,numberOfBids);
   }
+
   return (
     <>
       <button onClick={showModal} data-backdrop="false" className="my-btn">Add New NFT</button>
@@ -41,9 +42,14 @@ const AddNewNft = () => {
           </div>
           {error && (
             <div class="alert alert-danger my-2" role="alert">
-              {error}
+              Sorry. Action Failed.
           </div>
           )}
+          {data ? (
+            <div class="alert alert-success my-2" role="alert">
+              New NFT Has Been Added.
+            </div>
+          ):null}
         </Modal.Body>
       </Modal>
         

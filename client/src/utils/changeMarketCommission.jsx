@@ -15,6 +15,7 @@ const ChangeMarketCommission = () => {
   const handleSubmit = () => {
     changeMarketCommission(newCommission);
   }
+  
   return (
     <>
       <button onClick={showModal} data-backdrop="false" className="my-btn">Change Market Commission</button>
@@ -29,9 +30,14 @@ const ChangeMarketCommission = () => {
           </div>
           {error && (
             <div class="alert alert-danger my-2" role="alert">
-              {error}
+              Sorry. Action Failed.
           </div>
           )}
+          {data ? (
+            <div class="alert alert-success my-2" role="alert">
+              Market Commission Is Changed
+            </div>
+          ):null}
         </Modal.Body>
       </Modal>
     </>

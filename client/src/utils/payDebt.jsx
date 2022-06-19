@@ -15,6 +15,8 @@ const PayDebt = () => {
   const handleSubmit = () => {
     payDebt(nFTDebtId);
   }
+
+  
   return (
     <>
       <button onClick={showModal} data-backdrop="false" className="my-btn">Pay Debt</button>
@@ -29,9 +31,14 @@ const PayDebt = () => {
           </div>
           {error && (
             <div class="alert alert-danger my-2" role="alert">
-              {error}
+              Sorry. Action Failed.
           </div>
           )}
+          {data ? (
+            <div class="alert alert-success my-2" role="alert">
+              Debt Is Paid
+            </div>
+          ):null}
         </Modal.Body>
       </Modal>
     </>

@@ -14,8 +14,9 @@ const NewBid = () => {
     setIsOpen(false);
   };
   const handleSubmit = () => {
-    newBid(debtID,interest);
+    newBid(debtID, interest);
   }
+  console.log(data)
   return (
     <>
       <button onClick={showModal} data-backdrop="false" className="my-btn">New Bid</button>
@@ -31,9 +32,14 @@ const NewBid = () => {
           </div>
           {error && (
             <div class="alert alert-danger my-2" role="alert">
-              {error}
+              Sorry. Action Failed.
           </div>
           )}
+          {data ? (
+            <div class="alert alert-success my-2" role="alert">
+              New Bid Added
+            </div>
+          ):null}
         </Modal.Body>
       </Modal>
     </>

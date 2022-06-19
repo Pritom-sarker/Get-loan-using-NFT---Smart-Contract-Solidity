@@ -16,6 +16,7 @@ const RemoveNFT = () => {
   const handleSubmit = () => {
     removeNFT(nFTDebtId);
   }
+
   return (
     <>
         
@@ -31,9 +32,14 @@ const RemoveNFT = () => {
           </div>
           {error && (
             <div class="alert alert-danger my-2" role="alert">
-              {error}
+              Sorry. Action Failed.
           </div>
           )}
+          {data ? (
+            <div class="alert alert-success my-2" role="alert">
+              Successfully Removed NFT
+            </div>
+          ):null}
         </Modal.Body>
       </Modal>
     </>

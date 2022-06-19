@@ -131,7 +131,7 @@ export default function Nav() {
                     )}
                 <li>
                   { account && (
-                    <button className="my-btn mybtnMobile">Create</button>
+                    <a href="/create" className="my-btn mybtnMobile btnColor">Create</a>
                   )}
                 </li>
                 <li>

@@ -168,3 +168,10 @@ a {
     font-size: 14px;
   }
 }
+
+.btnColor{
+  color: #fff!important;
+}
+.btnColor:hover{
+  color: rgb(240, 34, 34)!important;
+}

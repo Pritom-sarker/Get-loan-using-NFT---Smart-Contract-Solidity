@@ -14,6 +14,7 @@ const AcceptBid = () => {
   const handleSubmit = () => {
     acceptBid(bidID);
   }
+
   return (
     <>
       <button onClick={showModal} data-backdrop="false" className="my-btn">Accept BID</button>
@@ -28,9 +29,14 @@ const AcceptBid = () => {
           </div>
           {error && (
             <div class="alert alert-danger my-2" role="alert">
-              {error}
+              Sorry. Action Failed.
           </div>
           )}
+          {data ? (
+            <div class="alert alert-success my-2" role="alert">
+              Bid Has Been Accepted
+            </div>
+          ):null}
         </Modal.Body>
       </Modal>
     </>

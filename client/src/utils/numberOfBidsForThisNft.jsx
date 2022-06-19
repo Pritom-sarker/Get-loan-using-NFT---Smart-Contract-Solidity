@@ -15,6 +15,7 @@ const NumberOfBidsForThisNft = () => {
   const handleSubmit = () => {
     numberOfBidsForThisNFT(nFTDebtId);
   }
+  console.log(data)
   return (
     <>
       <button onClick={showModal} data-backdrop="false" className="my-btn">Number Of Bids For This NFT</button>
@@ -29,9 +30,14 @@ const NumberOfBidsForThisNft = () => {
           </div>
           {error && (
             <div class="alert alert-danger my-2" role="alert">
-              {error}
+             Sorry. Action Failed.
           </div>
           )}
+          {data ? (
+            <div class="alert alert-success my-2" role="alert">
+              Action Successful
+            </div>
+          ):null}
         </Modal.Body>
       </Modal>
     </>

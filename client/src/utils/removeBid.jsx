@@ -15,6 +15,7 @@ const RemoveBid = () => {
   const handleSubmit = () => {
     removeBid(bidId);
   }
+
   return (
     <>
         
@@ -30,9 +31,14 @@ const RemoveBid = () => {
           </div>
           {error && (
             <div class="alert alert-danger my-2" role="alert">
-              {error}
+             Sorry. Action Failed.
           </div>
           )}
+          {data ?(
+            <div class="alert alert-success my-2" role="alert">
+              Successfully Removed Bid
+            </div>
+          ):null}
         </Modal.Body>
       </Modal>
     </>
