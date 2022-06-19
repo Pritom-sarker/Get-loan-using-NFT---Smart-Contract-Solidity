@@ -1,33 +1,25 @@
 import React from "react";
-import { useMoralis, useMoralisWeb3Api } from "react-moralis";
+
+import axios from 'axios';
+
 import { Link } from "react-router-dom";
+import { useState , useEffect } from "react";
+import { cardData } from "../home/data";
+import useFetchNft from "../../hooks/useFetchNft";
 import girl from "../../assets/image/girl.png";
 import Card from "../../components/card/Card";
 import Footer from "../../components/footer/Footer";
-import useNewBid from "../../hooks/useNewBid";
-import { cardData } from "../home/data";
+
 import "./user.css";
 
 const User = () => {
-  const { Moralis, user, account } = useMoralis();
-  const Web3Api = useMoralisWeb3Api();
-  const [newBid, { data }] = useNewBid();
-  console.log(data);
-
-  const fetchNFTs = () => {
-    newBid(0, 15);
-    console.log(data);
-  };
-
-  return (
+  const { data } = useFetchNft();
+    return (
     <>
-      <div className="userLanding">
+     <div className="userLanding">
         <div className="userSection">
           <img src={girl} className="userImaga" />
-          <h3>Mia Ayana</h3>
-          <button type="button" onClick={fetchNFTs}>
-            click
-          </button>
+            <h3>Mia Ayana</h3>
         </div>
       </div>
 
@@ -61,9 +53,10 @@ const User = () => {
             <br />
             <h1 className="titls">Items</h1>
             <div className="allCards usersAllCards">
-              {cardData.map((val, index) => (
-                <Link to="/nft" key={index}>
-                  <Card data={val} />
+              {data.map((nft, index) => (
+                <Link to="/nft"
+                key={index}>
+                  <Card nftData={nft} />
                 </Link>
               ))}
             </div>

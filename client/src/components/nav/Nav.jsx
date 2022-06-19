@@ -130,7 +130,9 @@ export default function Nav() {
                     </div>
                     )}
                 <li>
-                  <button className="my-btn mybtnMobile">Create</button>
+                  { account && (
+                    <button className="my-btn mybtnMobile">Create</button>
+                  )}
                 </li>
                 <li>
                   {!isAuthenticated || !account ? (

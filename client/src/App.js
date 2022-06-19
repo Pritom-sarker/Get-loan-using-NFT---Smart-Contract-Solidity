@@ -9,6 +9,7 @@ import About from "./pages/about/About";
 import Home from "./pages/home/Home";
 import NotFound from "./pages/notfound/Notfound";
 import Product from "./pages/product/Product";
+import Create from "./pages/create/Create";
 import Roadmap from "./pages/roadmap/Roadmap";
 import Team from "./pages/team/Team";
 import User from "./pages/user/User";
@@ -35,6 +36,7 @@ function App() {
           <Route path="/team" element={<Team />} />
           <Route path="/user" element={<User />} />
           <Route path="/nft" element={<Product />} />
+          <Route path="/create" element={<Create />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

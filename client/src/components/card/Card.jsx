@@ -1,24 +1,33 @@
 import React from "react";
 import "./Card.css";
-
-const Card = ({ data }) => {
-  const { img, title, balance, reaction } = data;
-  return (
-    <div className="Card">
-      <img src={img} alt="" />
-      <h5>{title}</h5>
-      <div className="cardFooter">
-        <h6>
-          <b>{balance}</b> ETH
-        </h6>
-        <p>
-          <i className="fa-solid fa-heart"></i>
-          &nbsp;
-          <span>{reaction}</span>
-        </p>
+import  AddressCompress  from "../../utils/AddressCompress";
+const Card = ({ nftData }) => {
+  if (nftData === undefined)
+  {
+    return (
+      <div>No Data To Show ...</div>
+    )  
+  } else {
+    const { image, name, owner, symbol } = nftData;
+    console.log(image)
+    return (
+      <div className="Card">
+        <img src={image} alt="" />
+        <h5>{name}</h5>
+        <div className="cardFooter">
+          <h6>
+            <b><AddressCompress address={ owner } /></b>
+          </h6>
+          <p>
+            <i className="fa-solid fa-heart"></i>
+            &nbsp;
+            <span>{symbol}</span>
+          </p>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+  
 };
 
 export default Card;
