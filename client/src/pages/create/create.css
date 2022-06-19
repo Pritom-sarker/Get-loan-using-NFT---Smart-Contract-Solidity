@@ -49,3 +49,9 @@
     flex-direction: column;
   }
 }
+.modal-width{
+  width: 100%;
+}
+.my-modal{
+  z-index: 999;
+}
